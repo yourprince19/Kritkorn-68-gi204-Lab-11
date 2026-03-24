@@ -2,6 +2,7 @@ using System;
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class Gravity : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class Gravity : MonoBehaviour
    private const float G = 0.006674f;
 
    public static List<Gravity> OtherObjectsList;
+
+   [SerializeField]  bool planet = false;
+   [SerializeField]  int orbitspeed = 1000;
 
    private void Awake()
    {
@@ -19,7 +23,12 @@ public class Gravity : MonoBehaviour
          OtherObjectsList = new List<Gravity>();
       }
       OtherObjectsList.Add(this);
-   }
+
+      if (!planet)
+      {
+         rb.AddForce(Vector3.left * orbitspeed);
+      }
+   } 
 
    private void FixedUpdate()
    {
